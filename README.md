@@ -10,11 +10,14 @@ second, and drawn as a **state-weather heatmap** that rolls across your
 terminal. It's `netstat -ant` for the people who actually wanted to
 *watch* the TCP state machine breathe.
 
-It's built on [**yeet**](https://github.com/yeet-run/yeet), a runtime
+It's built on [**yeet**](https://yeet.cx), a runtime
 that makes a kernel-side BPF program, a per-tick render loop, and a JS
 state model feel like one program.
 
-![flowtop screenshot placeholder](assets/flowtop.png)
+<!-- To record the demo GIF, run `vhs assets/flowtop.tape` on a Linux box
+     with yeet installed, then add:
+     ![flowtop](assets/flowtop.gif)
+     here. -->
 
 ---
 
@@ -127,8 +130,8 @@ Two BTF-typed tracepoints, one ringbuf:
 
 | BPF program          | hook                                | what it does                                                |
 |----------------------|-------------------------------------|-------------------------------------------------------------|
-| `on_state`           | `tp_btf/inet_sock_set_state`        | emit `(old, new, sk, family, sport, dport, addrs, comm)`    |
-| `on_retransmit`      | `tp_btf/tcp_retransmit_skb`         | emit a retransmit record for the corresponding `sk`         |
+| `on_set_state`       | `tp_btf/inet_sock_set_state`        | emit `(old, new, sk, family, sport, dport, addrs, comm)`    |
+| `on_retrans`         | `tp_btf/tcp_retransmit_skb`         | emit a retransmit record for the corresponding `sk`         |
 
 The userspace side is one ringbuf subscriber and a `setInterval` tick.
 The kernel-side program is straight-line: read the sock_common fields

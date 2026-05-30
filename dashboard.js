@@ -285,7 +285,8 @@ function panelFeed(C, H) {
     const remote = aAddr(fmtEndpoint(e.family, e.daddr, e.dport));
     let kindStr;
     if (e.kind === "retrans") {
-      kindStr = fg(C_ALERT) + bold + "⚠ RETRANS" + RESET + "  " +
+      const lbl = fg(C_ALERT) + bold + "⚠ RETRANS" + RESET;
+      kindStr = fixw(lbl, 22) + " " +
                 fg(252) + fixw(local, epW) + RESET +
                 fg(C_DIM) + " → " + RESET +
                 fg(252) + fixw(remote, epW) + RESET;
@@ -390,6 +391,11 @@ export function clearScreen() {
 }
 
 function smallTerm(C, R) {
-  const msg = `flowtop needs ≥ ${MIN_COLS} cols × ${MIN_ROWS} rows · current ${C}×${R}`;
-  return msg + "\n";
+  /* Keep the message itself within the available width. */
+  const lines = [
+    `flowtop: terminal too small`,
+    `need ≥ ${MIN_COLS}×${MIN_ROWS}`,
+    `have ${C}×${R}`,
+  ];
+  return lines.map((l) => l.slice(0, Math.max(1, C))).join("\n") + "\n";
 }
