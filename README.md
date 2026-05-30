@@ -14,10 +14,9 @@ It's built on [**yeet**](https://yeet.cx), a runtime
 that makes a kernel-side BPF program, a per-tick render loop, and a JS
 state model feel like one program.
 
-<!-- To record the demo GIF, run `vhs assets/flowtop.tape` on a Linux box
-     with yeet installed, then add:
-     ![flowtop](assets/flowtop.gif)
-     here. -->
+<p align="center">
+  <img src="assets/flowtop.gif" alt="flowtop demo" width="820">
+</p>
 
 ---
 
