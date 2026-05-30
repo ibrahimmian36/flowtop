@@ -125,7 +125,7 @@ function pushFeed(rec) { feed.push(rec); if (feed.length > FEED_KEEP) feed.shift
 /* Decoded BPF event shape (see flowtop.bpf.c):
  *   ts_ns, sk, oldstate, newstate, family, sport, dport,
  *   saddr[16], daddr[16], pid, comm, kind */
-function num(v) { return typeof v === "bigint" ? Number(v) : Number(v); }
+function num(v) { return typeof v === "bigint" ? Number(v) : v; }
 function bigKey(v) { return typeof v === "bigint" ? v.toString(16) : String(v); }
 function bytesAsArray(b) {
   const out = new Uint8Array(16);
